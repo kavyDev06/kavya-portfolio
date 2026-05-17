@@ -207,20 +207,10 @@ export default function Hero() {
             >
               <div className="glass-card px-6 py-4 rounded-full flex items-center gap-4 shadow-xl">
                 <div className="w-3 h-3 rounded-full bg-green-500 animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.6)]" />
-                <div className="flex flex-col text-left mr-4">
+                <div className="flex flex-col text-left">
                   <span className="text-sm font-bold text-[var(--text-primary)]">Kavya Mistry</span>
                   <span className="text-xs text-[var(--text-muted)]">Available for Collab</span>
                 </div>
-                <a 
-                  href="mailto:kavyamistry0612@gmail.com"
-                  className={`px-4 py-2 text-xs font-medium rounded-full hover:scale-105 transition-transform ${
-                    isDark 
-                      ? "bg-white text-black border border-white" 
-                      : "bg-black text-white border border-black"
-                  }`}
-                >
-                  Send Mail
-                </a>
               </div>
             </motion.div>
           </motion.div>

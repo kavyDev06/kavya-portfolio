@@ -190,6 +190,7 @@ export default function Navbar() {
               onClick={(e) => {
                 e.preventDefault();
                 scrollTo("#contact");
+                setIsMobileMenuOpen(false);
               }}
               className="mt-2 px-4 py-3 rounded-xl bg-black text-white dark:bg-zinc-900 dark:text-white dark:border dark:border-zinc-800 text-sm font-medium text-center transition-all active:scale-95"
             >

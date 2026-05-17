@@ -1,11 +1,84 @@
 "use client";
 
 import AnimatedSection from "../AnimatedSection";
-import { Mail, ArrowRight } from "lucide-react";
+import { ArrowRight, CheckCircle } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { motion } from "framer-motion";
+import { useForm } from "@formspree/react";
+
+function ContactForm() {
+  const [state, handleSubmit] = useForm("xzdwpkej");
+
+  if (state.succeeded) {
+    return (
+      <div className="w-full max-w-lg flex flex-col items-center justify-center py-8 px-6 rounded-2xl bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800">
+        <CheckCircle className="w-12 h-12 text-green-600 dark:text-green-400 mb-4" />
+        <h3 className="text-xl font-semibold text-green-700 dark:text-green-300 mb-2">Message Sent!</h3>
+        <p className="text-green-600 dark:text-green-400 text-center">Thanks! I'll get back to you soon.</p>
+      </div>
+    );
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="w-full max-w-lg mb-16 flex flex-col gap-4 text-left">
+      <div className="flex flex-col md:flex-row gap-4">
+        <div className="flex-1">
+          <label htmlFor="name" className="block text-sm font-medium text-[var(--text-secondary)] mb-1">Name</label>
+          <input 
+            type="text" 
+            id="name" 
+            name="name" 
+            required 
+            placeholder="John Doe"
+            className="w-full px-4 py-3 rounded-xl bg-[var(--surface-soft)] border border-[var(--border)] text-[var(--text-primary)] focus:outline-none focus:border-[var(--accent)] transition-colors"
+          />
+        </div>
+        <div className="flex-1">
+          <label htmlFor="role" className="block text-sm font-medium text-[var(--text-secondary)] mb-1">Role / Company</label>
+          <input 
+            type="text" 
+            id="role" 
+            name="role" 
+            required 
+            placeholder="Recruiter at TechCorp"
+            className="w-full px-4 py-3 rounded-xl bg-[var(--surface-soft)] border border-[var(--border)] text-[var(--text-primary)] focus:outline-none focus:border-[var(--accent)] transition-colors"
+          />
+        </div>
+      </div>
+      
+      <div>
+        <label htmlFor="message" className="block text-sm font-medium text-[var(--text-secondary)] mb-1">Message</label>
+        <textarea 
+          id="message" 
+          name="message" 
+          required 
+          rows={4}
+          placeholder="Hi Kavya, I'd like to discuss a project..."
+          className="w-full px-4 py-3 rounded-xl bg-[var(--surface-soft)] border border-[var(--border)] text-[var(--text-primary)] focus:outline-none focus:border-[var(--accent)] transition-colors resize-none"
+        ></textarea>
+      </div>
+
+      <motion.button
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
+        type="submit"
+        disabled={state.submitting}
+        className="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-medium text-white bg-black dark:bg-zinc-900 dark:text-white dark:border dark:border-zinc-800 rounded-xl overflow-hidden shadow-xl shadow-black/20 dark:shadow-none hover:shadow-black/40 transition-all mt-2 disabled:opacity-70"
+      >
+        <span className="relative z-10 flex items-center gap-3">
+          {state.submitting ? "Sending..." : "Send Message"}
+          {!state.submitting && <ArrowRight className="group-hover:translate-x-1 transition-transform" />}
+        </span>
+        {!state.submitting && (
+          <div className="absolute inset-0 h-full w-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]" />
+        )}
+      </motion.button>
+    </form>
+  );
+}
 
 export default function Contact() {
+
   return (
     <section id="contact" className="py-24 relative overflow-hidden">
       {/* Background Glow */}
@@ -34,77 +107,9 @@ export default function Contact() {
                 Whether you have a question or just want to say hi, I&apos;ll try my best to get back to you!
               </p>
 
-              <form 
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  const formData = new FormData(e.currentTarget);
-                  const name = formData.get('name') as string;
-                  const role = formData.get('role') as string;
-                  const message = formData.get('message') as string;
-                  
-                  const subject = encodeURIComponent(`Portfolio Contact: ${name} - ${role}`);
-                  const body = encodeURIComponent(`Name: ${name}\nRole: ${role}\n\nMessage:\n${message}`);
-                  const mailto = `mailto:kavyamistry0612@gmail.com?subject=${subject}&body=${body}`;
-                  
-                  const link = document.createElement('a');
-                  link.href = mailto;
-                  link.click();
-                }}
-                className="w-full max-w-lg mb-16 flex flex-col gap-4 text-left"
-              >
-                <div className="flex flex-col md:flex-row gap-4">
-                  <div className="flex-1">
-                    <label htmlFor="name" className="block text-sm font-medium text-[var(--text-secondary)] mb-1">Name</label>
-                    <input 
-                      type="text" 
-                      id="name" 
-                      name="name" 
-                      required 
-                      placeholder="John Doe"
-                      className="w-full px-4 py-3 rounded-xl bg-[var(--surface-soft)] border border-[var(--border)] text-[var(--text-primary)] focus:outline-none focus:border-[var(--accent)] transition-colors"
-                    />
-                  </div>
-                  <div className="flex-1">
-                    <label htmlFor="role" className="block text-sm font-medium text-[var(--text-secondary)] mb-1">Role / Company</label>
-                    <input 
-                      type="text" 
-                      id="role" 
-                      name="role" 
-                      required 
-                      placeholder="Recruiter at TechCorp"
-                      className="w-full px-4 py-3 rounded-xl bg-[var(--surface-soft)] border border-[var(--border)] text-[var(--text-primary)] focus:outline-none focus:border-[var(--accent)] transition-colors"
-                    />
-                  </div>
-                </div>
-                
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-[var(--text-secondary)] mb-1">Message</label>
-                  <textarea 
-                    id="message" 
-                    name="message" 
-                    required 
-                    rows={4}
-                    placeholder="Hi Kavya, I'd like to discuss a project..."
-                    className="w-full px-4 py-3 rounded-xl bg-[var(--surface-soft)] border border-[var(--border)] text-[var(--text-primary)] focus:outline-none focus:border-[var(--accent)] transition-colors resize-none"
-                  ></textarea>
-                </div>
-
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  type="submit"
-                  className="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-medium text-white bg-black dark:bg-zinc-900 dark:text-white dark:border dark:border-zinc-800 rounded-xl overflow-hidden shadow-xl shadow-black/20 dark:shadow-none hover:shadow-black/40 transition-all mt-2"
-                >
-                  <span className="relative z-10 flex items-center gap-3">
-                    Send Message
-                    <ArrowRight className="group-hover:translate-x-1 transition-transform" />
-                  </span>
-                  <div className="absolute inset-0 h-full w-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]" />
-                </motion.button>
-              </form>
+              <ContactForm />
 
               <div className="flex flex-wrap justify-center gap-4 w-full border-t border-[var(--border)] pt-12">
-                <SocialButton href="mailto:kavyamistry0612@gmail.com" icon={<Mail />} label="Email" />
                 <SocialButton href="https://www.linkedin.com/in/kavy-mistry-34572a252/" icon={<FaLinkedin size={20} />} label="LinkedIn" />
                 <SocialButton href="https://github.com/KavyaMistry369" icon={<FaGithub size={20} />} label="GitHub" />
               </div>
