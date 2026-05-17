@@ -42,12 +42,13 @@ export default function Contact() {
                   const role = formData.get('role') as string;
                   const message = formData.get('message') as string;
                   
-                  const subject = `Portfolio Contact: ${name} - ${role}`;
-                  const body = `Name: ${name}\nRole: ${role}\n\nMessage:\n${message}`;
+                  const subject = encodeURIComponent(`Portfolio Contact: ${name} - ${role}`);
+                  const body = encodeURIComponent(`Name: ${name}\nRole: ${role}\n\nMessage:\n${message}`);
+                  const mailto = `mailto:kavyamistry0612@gmail.com?subject=${subject}&body=${body}`;
                   
-                  const mailtoLink = `mailto:kavyamistry0612@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-                  
-                  window.location.href = mailtoLink;
+                  const link = document.createElement('a');
+                  link.href = mailto;
+                  link.click();
                 }}
                 className="w-full max-w-lg mb-16 flex flex-col gap-4 text-left"
               >
@@ -121,7 +122,7 @@ function SocialButton({ href, icon, label }: { href: string; icon: React.ReactNo
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="flex items-center gap-2 px-6 py-3 rounded-full bg-[var(--surface-soft)] hover:bg-[var(--accent)] hover:text-white transition-colors duration-300 text-[var(--text-secondary)] font-medium"
+      className="flex items-center gap-2 px-6 py-3 rounded-full bg-[var(--surface-soft)] text-[var(--text-secondary)] hover:bg-white hover:text-black dark:hover:bg-white dark:hover:text-black transition-colors duration-300 font-medium"
     >
       {icon}
       <span>{label}</span>
