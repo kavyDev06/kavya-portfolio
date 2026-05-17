@@ -38,12 +38,12 @@ export default function Contact() {
                 onSubmit={(e) => {
                   e.preventDefault();
                   const formData = new FormData(e.currentTarget);
-                  const name = formData.get('name');
-                  const role = formData.get('role');
-                  const message = formData.get('message');
+                  const name = formData.get('name') as string;
+                  const role = formData.get('role') as string;
+                  const message = formData.get('message') as string;
                   
                   const subject = encodeURIComponent(`Portfolio Contact: ${name} - ${role}`);
-                  const body = encodeURIComponent(`Name: ${name}\nRole: ${role}\n\nMessage:\n${message}`);
+                  const body = `Name: ${encodeURIComponent(name)}%0ARole: ${encodeURIComponent(role)}%0A%0AMessage:%0A${encodeURIComponent(message)}`;
                   
                   window.location.href = `mailto:kavyamistry0612@gmail.com?subject=${subject}&body=${body}`;
                 }}
