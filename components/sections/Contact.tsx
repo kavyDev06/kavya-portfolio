@@ -42,10 +42,12 @@ export default function Contact() {
                   const role = formData.get('role') as string;
                   const message = formData.get('message') as string;
                   
-                  const subject = encodeURIComponent(`Portfolio Contact: ${name} - ${role}`);
-                  const body = `Name: ${encodeURIComponent(name)}%0ARole: ${encodeURIComponent(role)}%0A%0AMessage:%0A${encodeURIComponent(message)}`;
+                  const subject = `Portfolio Contact: ${name} - ${role}`;
+                  const body = `Name: ${name}\nRole: ${role}\n\nMessage:\n${message}`;
                   
-                  window.location.href = `mailto:kavyamistry0612@gmail.com?subject=${subject}&body=${body}`;
+                  const mailtoLink = `mailto:kavyamistry0612@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+                  
+                  window.location.href = mailtoLink;
                 }}
                 className="w-full max-w-lg mb-16 flex flex-col gap-4 text-left"
               >
